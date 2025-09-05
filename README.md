@@ -1,6 +1,4 @@
-# C++ Project Template
-
-This project is a basic CMake template created to serve as a starting point for my C++ projects. Please note that I have only a little knowledge of CMake (I've started making this template just a few hours after discovering CMake) and that there are surely better ways to create build environments, but I will try to improve this template over time.
+# Logic game
 
 ## Setup
 
