@@ -65,7 +65,8 @@ void Window::start()
 /**
  * @brief Setup GLEW and the OpenGL context.
  */
-bool Window::initGL() {
+bool Window::initGL()
+{
 
 	// Initialize the OpenGL context and setup OpenGL attributes.
 	print_debug("Init OpenGL...");
@@ -103,16 +104,25 @@ bool Window::initGL() {
 /**
  * @brief Contains the main loop of the game.
  */
-void Window::loop() {
+void Window::loop()
+{
+
+	// Game events handler.
+	Events events;
 
 	// Main game loop.
 	uint32_t time = SDL_GetTicks();
-	while (false) {
+	while (!events.close()) {
 		if (SDL_GetTicks() - time > 1000/FPS_CAP) {
 			time = SDL_GetTicks();
 
+			// Process all new events.
+			events.poll();
 
+
+			
 			// DO SOME SHIT
+
 			
 
 			// Swap the frame buffers.
