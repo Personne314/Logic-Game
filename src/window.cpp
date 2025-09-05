@@ -79,25 +79,23 @@ bool Window::initGL() {
 		return false;   
 	} 
 
-	// Initialisation de GLEW.
+	// Init GLEW.
+	print_debug("Init GLEW...");
 	GLenum initGLEW = glewInit();
 	if (initGLEW != GLEW_OK) {
-		std::cerr << "Erreur lors de l'initialisation de GLEW : "
-			<< std::string(reinterpret_cast<const char*>(glewGetErrorString(initGLEW)))
-			<< std::endl;
+		print_error("Failed to initialize GLEW : " + std::string(
+			reinterpret_cast<const char*>(glewGetErrorString(initGLEW))
+		));
 		return false;
 	}
 
-	// Active le Depth Test, l'Alpha Blending et définit la couleur de nettoyage.
+	// Activate depth test, alpha blending and define clear color.
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_ALWAYS);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	SDL_GL_SetSwapInterval(0);
-
-	// Initialisation terminée.
-	std::cout << "OpenGL Initialisée !" << std::endl;
 	return true;
 
 }
@@ -107,20 +105,15 @@ bool Window::initGL() {
  */
 void Window::loop() {
 
-
-	
-	int i = 0;
-
-
 	// Main game loop.
 	uint32_t time = SDL_GetTicks();
-	while (i < 60) {
+	while (false) {
 		if (SDL_GetTicks() - time > 1000/FPS_CAP) {
 			time = SDL_GetTicks();
 
 
 			// DO SOME SHIT
-			++i;
+			
 
 			// Swap the frame buffers.
 			SDL_GL_SwapWindow(m_window);
