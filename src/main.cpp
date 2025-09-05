@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 #include "utils/logger.h"
+#include "window.h"
 
 
 
@@ -32,7 +33,7 @@ bool initSDL()
 {
 
 	// Init all SDL2 modules.
-	print_info("Init SDL2...");
+	print_debug("Init SDL2...");
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		print_error("Failed to initialize SDL2 : " + std::string(SDL_GetError()));
 		return false;
@@ -40,7 +41,7 @@ bool initSDL()
 	atexit(SDL_Quit);
 
 	// Init SDL_Image for image manipulation.
-	print_info("Init SDL_Image...");
+	print_debug("Init SDL_Image...");
 	int imgFlags = IMG_INIT_PNG;
 	if (!(IMG_Init(imgFlags) & imgFlags)) {
 		print_error("Failed to initialize SDL_Image : " + std::string(IMG_GetError()));
@@ -49,7 +50,7 @@ bool initSDL()
 	atexit(IMG_Quit);
 
 	// Init SDL_Mixer for sound managment.
-	print_info("Init SDL_Mixer...");
+	print_debug("Init SDL_Mixer...");
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
 		print_error("Failed to initialize SDL_Mixer : " + std::string(Mix_GetError()));
 		return false;
@@ -57,7 +58,7 @@ bool initSDL()
 	atexit(Mix_Quit);
 
 	// Init SDL_TTF for text rendering.
-	print_info("Init SDL_TTF...");
+	print_debug("Init SDL_TTF...");
 	if (TTF_Init() < 0) {
 		print_error("Failed to initialize SDL_TTF : " + std::string(TTF_GetError()));
 		return false;
@@ -89,19 +90,18 @@ int main(int argc, char* argv[]) {
 
 	// Setup the logger and the SDL2.
 	init_logger();
-	if (!initSDL()) return EXIT_FAILURE; 
+	if (!initSDL()) return 1; 
 	
 	// Get window size.
 	SDL_DisplayMode dm;
 	if (SDL_GetDesktopDisplayMode(0, &dm) != 0) {
-		std::cerr << "Erreur lors de la récupération des dimensions du bureau : " 
-			<< SDL_GetError() << std::endl;
-		return EXIT_FAILURE;
+		print_error("Failed to retrive desktop dimensions.");
+		return 1;
 	}
 
 	// Create the window and launch the game.
-	// Window window(dm.w, dm.h, "Logic Game");
-	// window.start();
+	Window window(dm.w, dm.h, "Logic Game");
+	window.start();
 
 	// Quitting the game.
 	print_info("Quitting the game...");
