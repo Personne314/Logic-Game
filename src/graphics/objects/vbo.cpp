@@ -38,15 +38,14 @@ void VBO::clean() {
  * @param buffer_len Number of vectors in each list of data.
  * @param n Number of lists in data.
  */
-void VBO::pushData(void** data, int* sizes, int* type_sizes, 
-int buffer_len, int n) {
+void VBO::pushData(void** data, uint32_t* sizes, uint32_t* type_sizes, uint32_t buffer_len, uint32_t n) {
 	clean();
 	m_size = buffer_len;
 
 	// Calculate all list size and total buffer size.
 	GLsizeiptr data_sizes[n+1];
 	data_sizes[n] = 0;
-	for (int i = 0; i < n; i++) {
+	for (uint32_t i = 0; i < n; i++) {
 		GLsizeiptr val = sizes[i] * type_sizes[i] * buffer_len;
 		data_sizes[n] += val;
 		data_sizes[i] = val;
@@ -56,7 +55,7 @@ int buffer_len, int n) {
 	glBind();
 		GLsizeiptr offset = 0;
 		glBufferData(GL_ARRAY_BUFFER, data_sizes[n], 0, GL_STATIC_DRAW);
-		for(int i = 0; i < n; i++) {
+		for(uint32_t i = 0; i < n; i++) {
 			glBufferSubData(GL_ARRAY_BUFFER, offset, data_sizes[i], data[i]);
 			offset += data_sizes[i];
 		}
