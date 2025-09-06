@@ -11,7 +11,8 @@
  * @class VAO
  * @brief Wrapper class arround OpenGL VAO.
  */
-class VAO {
+class VAO
+{
 public :
 
 	VAO();

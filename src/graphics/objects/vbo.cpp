@@ -13,7 +13,8 @@ VBO::VBO() : m_size(0)
 /**
  * @brief Destroy a VBO.
  */
-VBO::~VBO() {
+VBO::~VBO()
+{
 	if(glIsBuffer(m_vbo) == GL_TRUE) glDeleteBuffers(1, &m_vbo);
 }
 
@@ -22,7 +23,8 @@ VBO::~VBO() {
 /**
  * @brief Clean the VBO content.
  */
-void VBO::clean() {
+void VBO::clean()
+{
 	if(glIsBuffer(m_vbo) == GL_TRUE) glDeleteBuffers(1, &m_vbo);
 	glGenBuffers(1, &m_vbo);
 	m_size = 0;
@@ -38,7 +40,8 @@ void VBO::clean() {
  * @param buffer_len Number of vectors in each list of data.
  * @param n Number of lists in data.
  */
-void VBO::pushData(void** data, uint32_t* sizes, uint32_t* type_sizes, uint32_t buffer_len, uint32_t n) {
+void VBO::pushData(void** data, uint32_t* sizes, uint32_t* type_sizes, uint32_t buffer_len, uint32_t n)
+{
 	clean();
 	m_size = buffer_len;
 

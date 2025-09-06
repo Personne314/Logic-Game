@@ -5,7 +5,8 @@
 /**
  * @brief Return the size of the type in bytes.
  */
-int32_t sizeFromGLType(uint32_t type) {
+int32_t sizeFromGLType(uint32_t type)
+{
 	switch (type) {
 	case GL_FLOAT:	return sizeof(float);
 	case GL_DOUBLE:	return sizeof(double);
@@ -22,14 +23,16 @@ int32_t sizeFromGLType(uint32_t type) {
 /**
  * @brief Construct a VAO.
  */
-VAO::VAO() {
+VAO::VAO()
+{
 	glGenVertexArrays(1, &m_vao);
 }
 
 /**
  * @brief Destroy a VAO.
  */
-VAO::~VAO() {
+VAO::~VAO()
+{
 	if(glIsVertexArray(m_vao) == GL_TRUE) glDeleteVertexArrays(1, &m_vao);
 }
 
@@ -38,7 +41,8 @@ VAO::~VAO() {
 /**
  * @brief Clear the content of the VAO.
  */
-void VAO::clean() {
+void VAO::clean()
+{
 	if(glIsVertexArray(m_vao) == GL_TRUE) glDeleteVertexArrays(1, &m_vao);
 	glGenVertexArrays(1, &m_vao);
 }
@@ -53,7 +57,8 @@ void VAO::clean() {
  * @param buffer_len Number of vectors in each list of data.
  * @param n Number of lists in data.
  */ 
-void VAO::pushData(void** data, uint32_t* sizes, uint32_t* gl_types, uint32_t buffer_len, uint32_t n) {
+void VAO::pushData(void** data, uint32_t* sizes, uint32_t* gl_types, uint32_t buffer_len, uint32_t n)
+{
 	clean();
 
 	// Create a VAO and push the data to the VBO.
