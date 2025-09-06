@@ -138,8 +138,6 @@ void Window::loop()
 
 			// Render a new frame.
 			m_game->render(frame_duration);
-
-			// Swap the frame buffers.
 			SDL_GL_SwapWindow(m_window);
 	
 		// Delay when there is nothing to do.
