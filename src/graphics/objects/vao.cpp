@@ -67,15 +67,15 @@ void VAO::pushData(void** data, uint32_t* sizes, uint32_t* gl_types, uint32_t bu
 	m_vbo.pushData(data, sizes, type_sizes, buffer_len, n);
 
 	// Link the VAO to the VBO.
-	glBind();
-		m_vbo.glBind();
+	bind();
+		m_vbo.bind();
 			uint32_t offset = 0;
 			for (uint32_t i = 0; i < n; i++) {
 				glVertexAttribPointer(i, sizes[i], gl_types[i], GL_FALSE, 0, (void*)(offset));
 				glEnableVertexAttribArray(i);
 				offset += sizes[i] * type_sizes[i] * buffer_len;
 			}
-		m_vbo.glUnbind();
-	glUnbind();
+		m_vbo.unbind();
+	unbind();
 
 }

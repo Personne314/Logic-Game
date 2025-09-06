@@ -90,7 +90,7 @@ bool Shader::compileShader(uint32_t& shader, GLenum type, const std::string& sou
 
 	// Read the source code.
 	std::string sourceCode, line;
-	while (getline(file, line)) sourceCode += line;
+	while (getline(file, line)) sourceCode += line + '\n';
 	file.close();
 
 	// Compile the shader.

@@ -2,6 +2,9 @@
 
 #include <stdint.h>
 
+#include "graphics/objects/vao.h"
+#include "graphics/objects/shader.h"
+
 
 
 class Game
@@ -18,5 +21,10 @@ public:
 private:
 
 	bool m_init;
+
+
+	VAO vao;
+	Shader shader;
+
 
 };

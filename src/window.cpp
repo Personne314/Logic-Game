@@ -73,8 +73,8 @@ bool Window::initGL()
 
 	// Initialize the OpenGL context and setup OpenGL attributes.
 	print_debug("Init OpenGL...");
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 	m_context = SDL_GL_CreateContext(m_window);
@@ -99,7 +99,17 @@ bool Window::initGL()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glViewport(0,0, m_width, m_height);
 	SDL_GL_SetSwapInterval(0);
+
+	// Print OpenGL infos.
+	#ifndef NDEBUG
+	print_debug("OpenGL version: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))));
+	print_debug("GLSL version: " + std::string(reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION))));
+	print_debug("Renderer: " + std::string(reinterpret_cast<const char*>(glGetString(GL_RENDERER))));
+	print_debug("Vendor: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR))));
+	#endif
+	
 	return true;
 
 }

@@ -55,13 +55,13 @@ void VBO::pushData(void** data, uint32_t* sizes, uint32_t* type_sizes, uint32_t 
 	}
 
 	// Bind the VBO and send alla data to it.
-	glBind();
+	bind();
 		GLsizeiptr offset = 0;
 		glBufferData(GL_ARRAY_BUFFER, data_sizes[n], 0, GL_STATIC_DRAW);
 		for(uint32_t i = 0; i < n; i++) {
 			glBufferSubData(GL_ARRAY_BUFFER, offset, data_sizes[i], data[i]);
 			offset += data_sizes[i];
 		}
-	glUnbind();
+	unbind();
 	
 }

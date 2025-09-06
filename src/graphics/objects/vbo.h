@@ -24,8 +24,8 @@ public:
 
 	uint32_t getSize() const { return m_size; }
 
-	void glBind() const { glBindBuffer(GL_ARRAY_BUFFER, m_vbo); }
-	void glUnbind() const { glBindBuffer(GL_ARRAY_BUFFER, 0); }
+	void bind() const { glBindBuffer(GL_ARRAY_BUFFER, m_vbo); }
+	void unbind() const { glBindBuffer(GL_ARRAY_BUFFER, 0); }
 
 private:
 

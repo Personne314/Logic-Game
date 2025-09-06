@@ -23,8 +23,8 @@ public :
 
 	uint32_t getSize() const { return m_vbo.getSize(); }
 
-	void glBind() const { glBindVertexArray(m_vao); }
-	void glUnbind() const { glBindVertexArray(0); }
+	void bind() const { glBindVertexArray(m_vao); }
+	void unbind() const { glBindVertexArray(0); }
 
 private:
 

@@ -20,8 +20,7 @@ public:
 	Shader(const std::string& name);
 	~Shader();
 
-	void glUse() const { glUseProgram(m_progID); }
-	void glUnuse() const { glUseProgram(0); }
+	void use() const { glUseProgram(m_progID); }
 
 	int getUniformLocation(std::string name) const { return glGetUniformLocation(m_progID, name.c_str()); }
 
