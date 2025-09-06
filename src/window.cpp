@@ -2,7 +2,7 @@
 
 
 
-#define FPS_CAP 60
+#define FRAME_DURATION 1.0/60
 
 
 
@@ -35,8 +35,9 @@ Window::Window(int width, int height, const std::string& name) :
 	// Init GLEW and the OpenGL context.
 	if (!initGL()) return;
 
-
-	m_init = true;
+	// Create the game.
+	m_game = std::make_unique<Game>();
+	m_init = m_game->isInit();
 
 }
 
@@ -110,23 +111,24 @@ void Window::loop()
 	// Game events handler.
 	Events events;
 
-	// Main game loop.
+	// Timer.
 	uint32_t time = SDL_GetTicks();
+	double frame_duration = 0.0;
+
+	// Main game loop.
 	while (!events.close()) {
-		if (SDL_GetTicks() - time > 1000/FPS_CAP) {
+		if ((frame_duration = (SDL_GetTicks()-time)/1000.0) > FRAME_DURATION) {
 			time = SDL_GetTicks();
 
 			// Process all new events.
 			events.poll();
 
-
-			
-			// DO SOME SHIT
-
-			
+			// Render a new frame.
+			m_game->render(frame_duration);
 
 			// Swap the frame buffers.
 			SDL_GL_SwapWindow(m_window);
+
 		} else SDL_Delay(1);
 	}
 

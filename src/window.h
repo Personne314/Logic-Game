@@ -8,6 +8,7 @@
 
 #include "utils/events.h"
 #include "utils/logger.h"
+#include "game.h"
 
 
 
@@ -35,5 +36,7 @@ private:
 	SDL_Window* m_window;		// The SDL window to use.
 	int m_width;	// Window width.
 	int m_height;	// Window height.
+
+	std::unique_ptr<Game> m_game;	// Pointer to the game.
 
 };
