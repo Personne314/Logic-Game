@@ -1,11 +1,14 @@
 #pragma once
 
+#include <stdint.h>
 
 
-class Game {
+
+class Game
+{
 public:
 
-	Game(int width, int height);
+	Game(uint32_t width, uint32_t height);
 	~Game();
 
 	void render(double elapsed_time);

@@ -1,8 +1,10 @@
 #include "window.h"
 
+using namespace std::chrono_literals;
 
 
-#define FRAME_DURATION 1.0/60
+
+#define FRAME_CAP 60
 
 
 
@@ -12,7 +14,7 @@
  * @param height The height of the window in pixels.
  * @param name The name of the window.
  */
-Window::Window(int width, int height, const std::string& name) : 
+Window::Window(uint32_t width, uint32_t height, const std::string& name) : 
 	m_init(false), 
 	m_context(nullptr), 
 	m_window(nullptr), 
@@ -36,7 +38,7 @@ Window::Window(int width, int height, const std::string& name) :
 	if (!initGL()) return;
 
 	// Create the game.
-	m_game = std::make_unique<Game>();
+	m_game = std::make_unique<Game>(width, height);
 	m_init = m_game->isInit();
 
 }
@@ -112,13 +114,24 @@ void Window::loop()
 	Events events;
 
 	// Timer.
-	uint32_t time = SDL_GetTicks();
+	auto frame_time = std::chrono::high_resolution_clock::now();
+	auto second_time = frame_time;
 	double frame_duration = 0.0;
+	uint32_t frame = 0;
+	uint32_t fps = 0;
 
 	// Main game loop.
 	while (!events.close()) {
-		if ((frame_duration = (SDL_GetTicks()-time)/1000.0) > FRAME_DURATION) {
-			time = SDL_GetTicks();
+		auto now = std::chrono::high_resolution_clock::now();
+
+		// Render a frame.
+		if ((frame_duration = std::chrono::duration_cast<std::chrono::milliseconds>(
+				now-frame_time).count()
+			) >= 1000/FRAME_CAP && 
+			frame < FRAME_CAP
+		) {
+			frame_time = now;
+			++frame;
 
 			// Process all new events.
 			events.poll();
@@ -128,8 +141,20 @@ void Window::loop()
 
 			// Swap the frame buffers.
 			SDL_GL_SwapWindow(m_window);
+	
+		// Delay when there is nothing to do.
+		} else std::this_thread::sleep_for(100us);
 
-		} else SDL_Delay(1);
+		// Measure the FPS.
+		if (std::chrono::duration_cast<std::chrono::milliseconds>(now-second_time).count() >= 1000) {
+			second_time = now;
+			fps = frame;
+			frame = 0;
+			#ifndef NDEBUG
+			print_debug("FPS (" + std::to_string(fps) + ")");
+			#endif
+		}
+
 	}
 
 }

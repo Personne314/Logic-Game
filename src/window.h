@@ -5,6 +5,8 @@
 #include <memory>
 #include <string>
 #include <stdint.h>
+#include <chrono>
+#include <thread>
 
 #include "utils/events.h"
 #include "utils/logger.h"
@@ -20,7 +22,7 @@ class Window
 {
 public:
 
-	Window(int w, int h, const std::string& name);
+	Window(uint32_t w, uint32_t h, const std::string& name);
 	~Window();
 
 	void start();
