@@ -153,11 +153,16 @@ void Camera::setHeight(float height)
  */
 void Camera::update_viewport()
 {
-	if (m_zoom == 1) m_viewport = m_raw_viewport;
-	else {
-		m_viewport.w = m_raw_viewport.w * m_zoom;
-		m_viewport.h = m_raw_viewport.h * m_zoom;
-		m_viewport.x = m_raw_viewport.x + m_raw_viewport.w * (1.0f - m_zoom) * 0.5f;
-		m_viewport.y = m_raw_viewport.y + m_raw_viewport.h * (1.0f - m_zoom) * 0.5f;
-	}
+
+	const float cx = m_raw_viewport.x + m_raw_viewport.w * 0.5f;
+    const float cy = m_raw_viewport.y + m_raw_viewport.h * 0.5f;
+
+    const float half_w = m_raw_viewport.w * m_zoom * 0.5f;
+    const float half_h = m_raw_viewport.h * m_zoom * 0.5f;
+
+	m_viewport = glm::ortho(
+        cx - half_w, cx + half_w,
+        cy - half_h, cy + half_h
+    );
+
 }

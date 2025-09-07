@@ -1,6 +1,8 @@
 #pragma once
 
 #include <stdint.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "../math/rect.h"
 
@@ -30,7 +32,7 @@ public:
 	float getZoomMin() const { return m_zoom_min; }
 	float getZoomMax() const { return m_zoom_max; }
 	float getScreenRatio() const { return m_screen_ratio; }
-	const Rect &getViewport() const { return m_viewport; }
+	const glm::mat4 &getViewport() const { return m_viewport; }
 
 private:
 
@@ -42,7 +44,7 @@ private:
 	float m_zoom_min;	// Min zoom value.
 	float m_zoom_max;	// Max zoom value.
 
-	Rect m_viewport;	// Viewport of the camera after applying the zoom.
+	glm::mat4 m_viewport;	// Viewport of the camera after applying the zoom.
 	Rect m_raw_viewport;	// Viewport of the camera without the zoom.
 
 };
