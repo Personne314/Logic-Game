@@ -9,7 +9,7 @@
 #include <thread>
 
 #include "utils/events.h"
-#include "utils/logger.h"
+#include "utils/logger.hpp"
 #include "game.h"
 
 

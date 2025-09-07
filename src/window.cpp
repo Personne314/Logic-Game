@@ -30,7 +30,7 @@ Window::Window(uint32_t width, uint32_t height, const std::string& name) :
 		SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
 	);
 	if (!m_window) {
-		print_error("Failed to create the window : " + std::string(SDL_GetError()));
+		print_error("Failed to create the window : {}", SDL_GetError());
 		return;
 	}
 
@@ -79,7 +79,7 @@ bool Window::initGL()
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 	m_context = SDL_GL_CreateContext(m_window);
 	if (!m_context) {
-		print_error("Failed to create the OpenGL context : " + std::string(SDL_GetError()));
+		print_error("Failed to create the OpenGL context : {}", SDL_GetError());
 		return false;   
 	} 
 
@@ -87,9 +87,10 @@ bool Window::initGL()
 	print_debug("Init GLEW...");
 	GLenum initGLEW = glewInit();
 	if (initGLEW != GLEW_OK) {
-		print_error("Failed to initialize GLEW : " + std::string(
+		print_error(
+			"Failed to initialize GLEW : {}",
 			reinterpret_cast<const char*>(glewGetErrorString(initGLEW))
-		));
+		);
 		return false;
 	}
 
@@ -104,10 +105,10 @@ bool Window::initGL()
 
 	// Print OpenGL infos.
 	#ifndef NDEBUG
-	print_debug("OpenGL version: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))));
-	print_debug("GLSL version: " + std::string(reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION))));
-	print_debug("Renderer: " + std::string(reinterpret_cast<const char*>(glGetString(GL_RENDERER))));
-	print_debug("Vendor: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR))));
+	print_debug("OpenGL version : {}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
+	print_debug("GLSL version {}: ", reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION)));
+	print_debug("Renderer : {}", reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
+	print_debug("Vendor : {}", reinterpret_cast<const char*>(glGetString(GL_VENDOR)));
 	#endif
 	
 	return true;
@@ -159,7 +160,7 @@ void Window::loop()
 			fps = frame;
 			frame = 0;
 			#ifndef NDEBUG
-			print_debug("FPS (" + std::to_string(fps) + ")");
+			print_debug("FPS ({})", fps);
 			#endif
 		}
 

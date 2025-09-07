@@ -13,7 +13,7 @@ int32_t sizeFromGLType(uint32_t type)
 	case GL_INT:	return sizeof(uint32_t);
 	case GL_SHORT:	return sizeof(uint16_t);
 	default:		
-		print_error("Unknown GLType " + std::to_string(type));
+		print_error("Unknown GLType {}", type);
 		return -1;
 	}
 }
@@ -69,7 +69,7 @@ void VAO::pushData(void** data, uint32_t* sizes, uint32_t* gl_types, uint32_t bu
 	// Link the VAO to the VBO.
 	bind();
 		m_vbo.bind();
-			uint32_t offset = 0;
+			size_t offset = 0;
 			for (uint32_t i = 0; i < n; i++) {
 				glVertexAttribPointer(i, sizes[i], gl_types[i], GL_FALSE, 0, (void*)(offset));
 				glEnableVertexAttribArray(i);

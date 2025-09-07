@@ -44,7 +44,7 @@ Shader::Shader(const std::string& name) :
 		error[size] = '\0';
 
 		// Log the error.
-		print_error("Failed to link the shader '" + name + "' : " + std::string(error));
+		print_error("Failed to link the shader '{}' : {}", name, error);
 		delete[] error;
 		return;
 
@@ -77,14 +77,14 @@ bool Shader::compileShader(uint32_t& shader, GLenum type, const std::string& sou
 	// Create a new shader.
 	shader = glCreateShader(type);
 	if (shader == 0) {
-		print_error("Failed to compile '" + source + "' : type " + std::to_string(type) + " does not exists.");
+		print_error("Failed to compile '{}' : type {} does not exists.", source, type);
 		return false;
 	} 
 
 	// Open the file.   
 	std::ifstream file(source.c_str());
 	if (!file) {
-		print_error("Failed to compile '" + source + "' : source file does not exists.");
+		print_error("Failed to compile '{}' : source file does not exists.", source);
 		return false;
 	} 
 
@@ -109,7 +109,7 @@ bool Shader::compileShader(uint32_t& shader, GLenum type, const std::string& sou
 		error[size] = '\0';
 
 		// Log the error.
-		print_error("Failed to compile '" + source + "' : " + std::string(error));
+		print_error("Failed to compile '{}' : {}", source, error);
 		delete [] error;
 		return false;
 

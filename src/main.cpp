@@ -6,7 +6,7 @@
 #include <filesystem>
 #include <unistd.h>
 
-#include "utils/logger.h"
+#include "utils/logger.hpp"
 #include "window.h"
 
 
@@ -35,7 +35,7 @@ bool initSDL()
 	// Init all SDL2 modules.
 	print_debug("Init SDL2...");
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-		print_error("Failed to initialize SDL2 : " + std::string(SDL_GetError()));
+		print_error("Failed to initialize SDL2 : {}", SDL_GetError());
 		return false;
 	}
 	atexit(SDL_Quit);
@@ -44,7 +44,7 @@ bool initSDL()
 	print_debug("Init SDL_Image...");
 	int imgFlags = IMG_INIT_PNG;
 	if (!(IMG_Init(imgFlags) & imgFlags)) {
-		print_error("Failed to initialize SDL_Image : " + std::string(IMG_GetError()));
+		print_error("Failed to initialize SDL_Image : {}", IMG_GetError());
 		return false;
 	}
 	atexit(IMG_Quit);
@@ -52,7 +52,7 @@ bool initSDL()
 	// Init SDL_Mixer for sound managment.
 	print_debug("Init SDL_Mixer...");
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-		print_error("Failed to initialize SDL_Mixer : " + std::string(Mix_GetError()));
+		print_error("Failed to initialize SDL_Mixer : {}", Mix_GetError());
 		return false;
 	}
 	atexit(Mix_Quit);
@@ -60,7 +60,7 @@ bool initSDL()
 	// Init SDL_TTF for text rendering.
 	print_debug("Init SDL_TTF...");
 	if (TTF_Init() < 0) {
-		print_error("Failed to initialize SDL_TTF : " + std::string(TTF_GetError()));
+		print_error("Failed to initialize SDL_TTF : {}", TTF_GetError());
 		return false;
 	}
 	atexit(TTF_Quit);
