@@ -6,6 +6,7 @@ Game::Game(uint32_t width, uint32_t height) :
 	m_init(false),
 	vao(),
 	shader("shader"),
+	shader_grid("grid"),
 	cam(width, height)
 {
 
@@ -28,7 +29,9 @@ Game::Game(uint32_t width, uint32_t height) :
 	vao.pushData(data, sizes, types, len, n);
 
 
-	cam.setHeight(2);
+	cam.setHeight(8);
+
+	grid = new Grid(cam, shader_grid);
 
 
 	m_init = true;
@@ -36,13 +39,14 @@ Game::Game(uint32_t width, uint32_t height) :
 
 Game::~Game()
 {
-
+	delete grid;
 }
 
 
 
 void Game::render(double elapsed_time)
 {
+	grid->render();
 	shader.use();
 	vao.bind();
 		glUniformMatrix4fv(shader.getUniformLocation("viewport"), 1, GL_FALSE, glm::value_ptr(cam.getViewport()));

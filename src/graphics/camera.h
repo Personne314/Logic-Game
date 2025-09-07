@@ -37,6 +37,7 @@ public:
 	float getZoomMax() const { return m_zoom_max; }
 	float getScreenRatio() const { return m_screen_ratio; }
 	const glm::mat4 &getViewport() const { return m_viewport; }
+	const glm::mat4 &getInvViewport() const { return m_inv_viewport; }
 
 private:
 
@@ -49,6 +50,7 @@ private:
 	float m_zoom_max;	// Max zoom value.
 
 	glm::mat4 m_viewport;	// Viewport of the camera after applying the zoom.
+	glm::mat4 m_inv_viewport;	// Inverse of the viewport matrix.
 	Rect m_raw_viewport;	// Viewport of the camera without the zoom.
 
 };

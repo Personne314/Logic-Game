@@ -13,6 +13,7 @@ Camera::Camera(uint32_t width, uint32_t height) :
 	m_zoom_min(0.5f),
 	m_zoom_max(2.0f),
 	m_viewport(),
+	m_inv_viewport(),
 	m_raw_viewport()
 {
 
@@ -156,14 +157,18 @@ void Camera::updateViewport()
 
 	// Calculate viewport center and size.
 	const float cx = m_raw_viewport.x;
-    const float cy = m_raw_viewport.y;
-    const float half_w = m_raw_viewport.w * m_zoom * 0.5f;
-    const float half_h = m_raw_viewport.h * m_zoom * 0.5f;
+	const float cy = m_raw_viewport.y;
+	const float half_w = m_raw_viewport.w * m_zoom * 0.5f;
+	const float half_h = m_raw_viewport.h * m_zoom * 0.5f;
 
 	// Calculate the viewport.
 	m_viewport = glm::ortho(
-        cx - half_w, cx + half_w,
-        cy - half_h, cy + half_h
-    );
+		cx - half_w, cx + half_w,
+		cy - half_h, cy + half_h
+	);
+
+
+    // Calculate the inverse viewport matrix.
+    m_inv_viewport = glm::inverse(m_viewport);
 
 }

@@ -5,7 +5,7 @@
 #include "graphics/objects/vao.h"
 #include "graphics/objects/shader.h"
 #include "graphics/camera.h"
-
+#include "interface/grid.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -28,7 +28,9 @@ private:
 
 	VAO vao;
 	Shader shader;
+	Shader shader_grid;
 	Camera cam;
 
+	Grid* grid;
 
 };
