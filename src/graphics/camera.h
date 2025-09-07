@@ -8,6 +8,10 @@
 
 
 
+/**
+ * @class Camera
+ * @brief Used to move a viewport in a 2D space.
+ */
 class Camera
 {
 public:
@@ -36,7 +40,7 @@ public:
 
 private:
 
-	void update_viewport();
+	void updateViewport();
 
 	const float m_screen_ratio;	// Screen ratio.
 

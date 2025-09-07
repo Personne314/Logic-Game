@@ -5,7 +5,8 @@
 Game::Game(uint32_t width, uint32_t height) :
 	m_init(false),
 	vao(),
-	shader("shader")
+	shader("shader"),
+	cam(width, height)
 {
 
 	float vertices[] = {
@@ -26,6 +27,10 @@ Game::Game(uint32_t width, uint32_t height) :
 
 	vao.pushData(data, sizes, types, len, n);
 
+
+	cam.setHeight(2);
+
+
 	m_init = true;
 }
 
@@ -40,6 +45,7 @@ void Game::render(double elapsed_time)
 {
 	shader.use();
 	vao.bind();
-	glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(shader.getUniformLocation("viewport"), 1, GL_FALSE, glm::value_ptr(cam.getViewport()));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 	vao.unbind();
 }

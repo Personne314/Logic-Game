@@ -4,8 +4,11 @@
 
 #include "graphics/objects/vao.h"
 #include "graphics/objects/shader.h"
+#include "graphics/camera.h"
 
 
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class Game
 {
@@ -25,6 +28,7 @@ private:
 
 	VAO vao;
 	Shader shader;
+	Camera cam;
 
 
 };

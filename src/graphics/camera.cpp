@@ -8,7 +8,7 @@
  * @param height The height of the screen (in pixels).
  */
 Camera::Camera(uint32_t width, uint32_t height) :
-	m_screen_ratio(width/height),
+	m_screen_ratio((float)width/height),
 	m_zoom(1.0f),
 	m_zoom_min(0.5f),
 	m_zoom_max(2.0f),
@@ -29,7 +29,7 @@ void Camera::setPos(float x, float y)
 {
 	m_raw_viewport.x = x;
 	m_raw_viewport.y = y;
-	update_viewport();
+	updateViewport();
 }
 
 /**
@@ -41,7 +41,7 @@ void Camera::move(float dx, float dy)
 {
 	m_raw_viewport.x += dx;
 	m_raw_viewport.y += dy;
-	update_viewport();
+	updateViewport();
 }
 
 /**
@@ -51,7 +51,7 @@ void Camera::move(float dx, float dy)
 void Camera::moveX(float dx)
 {
 	m_raw_viewport.x += dx;
-	update_viewport();
+	updateViewport();
 }
 
 /**
@@ -61,7 +61,7 @@ void Camera::moveX(float dx)
 void Camera::moveY(float dy)
 {
 	m_raw_viewport.y += dy;
-	update_viewport();
+	updateViewport();
 }
 
 
@@ -76,7 +76,7 @@ void Camera::setZoom(float z)
 	m_zoom = z;
 	if (m_zoom < m_zoom_min) m_zoom = m_zoom_min;
 	if (m_zoom > m_zoom_max) m_zoom = m_zoom_max;
-	update_viewport();
+	updateViewport();
 }
 
 /**
@@ -89,7 +89,7 @@ void Camera::zoom(float dz)
 	m_zoom *= dz;
 	if (m_zoom < m_zoom_min) m_zoom = m_zoom_min;
 	if (m_zoom > m_zoom_max) m_zoom = m_zoom_max;
-	update_viewport();
+	updateViewport();
 }
 
 /**
@@ -102,7 +102,7 @@ void Camera::setZoomMin(float z_min)
 	m_zoom_min = z_min;
 	if (m_zoom < z_min) {
 		m_zoom = z_min;
-		update_viewport();
+		updateViewport();
 	}
 }
 
@@ -116,7 +116,7 @@ void Camera::setZoomMax(float z_max)
 	m_zoom_max = z_max;
 	if (m_zoom > z_max) {
 		m_zoom = z_max;
-		update_viewport();
+		updateViewport();
 	}
 }
 
@@ -131,7 +131,7 @@ void Camera::setWidth(float width)
 {
 	m_raw_viewport.w = width;
 	m_raw_viewport.h = width/m_screen_ratio;
-	update_viewport();
+	updateViewport();
 }
 
 /**
@@ -143,7 +143,7 @@ void Camera::setHeight(float height)
 {
 	m_raw_viewport.w = height*m_screen_ratio;
 	m_raw_viewport.h = height;
-	update_viewport();
+	updateViewport();
 }
 
 
@@ -151,15 +151,16 @@ void Camera::setHeight(float height)
 /**
  * @brief Apply the zoom to the viewport.
  */
-void Camera::update_viewport()
+void Camera::updateViewport()
 {
 
-	const float cx = m_raw_viewport.x + m_raw_viewport.w * 0.5f;
-    const float cy = m_raw_viewport.y + m_raw_viewport.h * 0.5f;
-
+	// Calculate viewport center and size.
+	const float cx = m_raw_viewport.x;
+    const float cy = m_raw_viewport.y;
     const float half_w = m_raw_viewport.w * m_zoom * 0.5f;
     const float half_h = m_raw_viewport.h * m_zoom * 0.5f;
 
+	// Calculate the viewport.
 	m_viewport = glm::ortho(
         cx - half_w, cx + half_w,
         cy - half_h, cy + half_h
