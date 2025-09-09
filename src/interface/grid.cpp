@@ -29,21 +29,26 @@ Grid::~Grid()
 
 void Grid::update(double elapsed_time)
 {
-
 	if (m_events.up()) m_camera.move(0, elapsed_time);
 	if (m_events.left()) m_camera.move(-elapsed_time, 0);
 	if (m_events.right()) m_camera.move(elapsed_time, 0);
 	if (m_events.down()) m_camera.move(0, -elapsed_time);
-
 }
 
 void Grid::render()
 {
 	m_shader.use();
 	m_vao.bind();
-		glUniform4f(m_shader.getUniformLocation("background_color"), 0.1, 0.1, 0.12, 1.0);
-		glUniform4f(m_shader.getUniformLocation("major_color"), 0.2, 0.4, 0.4, 1.0);
-		glUniform4f(m_shader.getUniformLocation("minor_color"), 0.2, 0.25, 0.3, 1.0);
+		glUniform4f(
+			m_shader.getUniformLocation("background_color"), 
+			m_color_background.r, m_color_background.g, m_color_background.b, m_color_background.a
+		);
+		glUniform4f(
+			m_shader.getUniformLocation("major_color"),
+			m_color_major.r, m_color_major.g, m_color_major.b, m_color_major.a);
+		glUniform4f(
+			m_shader.getUniformLocation("minor_color"),
+			m_color_minor.r, m_color_minor.g, m_color_minor.b, m_color_minor.a);
 		glUniformMatrix4fv(
 			m_shader.getUniformLocation("inv_viewport"), 
 			1, GL_FALSE, glm::value_ptr(m_camera.getInvViewport())

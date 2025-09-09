@@ -9,6 +9,9 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "math/color.hpp"
+
+
 
 class Game
 {

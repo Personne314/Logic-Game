@@ -15,7 +15,7 @@
  * @namespace Color
  * @brief Contains definition of constants for ANSI color codes.
  */
-namespace Color
+namespace ANSIColor
 {
 	inline const std::string RED      = "\033[31m";
 	inline const std::string GREEN    = "\033[32m";
@@ -27,10 +27,10 @@ namespace Color
 }
 
 // Define the logger colors.
-#define ERROR_COLOR Color::RED
-#define WARNING_COLOR Color::YELLOW
+#define ERROR_COLOR ANSIColor::RED
+#define WARNING_COLOR ANSIColor::YELLOW
 #ifndef NDEBUG
-#define DEBUG_COLOR Color::CYAN
+#define DEBUG_COLOR ANSIColor::CYAN
 #endif
 
 
@@ -104,8 +104,8 @@ inline void print_error(const std::format_string<Args...> str, Args&&... args)
 	if (!_logger_state().logger_init) return;
 	std::string msg = std::format(str, std::forward<Args>(args)...);
 	if (_logger_state().file_open) print_header(_logger_state().file << ERROR_COLOR) 
-		<< "Error: " << msg << Color::RESET << std::endl;
-	else print_header(std::cerr << ERROR_COLOR) << "Error: " << msg << Color::RESET << std::endl;
+		<< "Error: " << msg << ANSIColor::RESET << std::endl;
+	else print_header(std::cerr << ERROR_COLOR) << "Error: " << msg << ANSIColor::RESET << std::endl;
 }
 
 /**
@@ -118,8 +118,8 @@ inline void print_warning(const std::format_string<Args...> str, Args&&... args)
 	if (!_logger_state().logger_init) return;
 	std::string msg = std::format(str, std::forward<Args>(args)...);
 	if (_logger_state().file_open) print_header(_logger_state().file << WARNING_COLOR) 
-		<< "Warning: " << msg << Color::RESET << std::endl;
-	else print_header(std::cerr << WARNING_COLOR) << "Warning: " << msg << Color::RESET << std::endl;
+		<< "Warning: " << msg << ANSIColor::RESET << std::endl;
+	else print_header(std::cerr << WARNING_COLOR) << "Warning: " << msg << ANSIColor::RESET << std::endl;
 }
 
 /**
@@ -146,7 +146,7 @@ inline void print_debug(const std::format_string<Args...> str, Args&&... args)
 	if (!_logger_state().logger_init) return;
 	std::string msg = std::format(str, std::forward<Args>(args)...);
 	if (_logger_state().file_open) print_header(_logger_state().file << DEBUG_COLOR) 
-		<< "Debug: " << msg << Color::RESET << std::endl;
-	else print_header(std::cerr << DEBUG_COLOR) << "Debug: " << msg << Color::RESET << std::endl;
+		<< "Debug: " << msg << ANSIColor::RESET << std::endl;
+	else print_header(std::cerr << DEBUG_COLOR) << "Debug: " << msg << ANSIColor::RESET << std::endl;
 }
 #endif

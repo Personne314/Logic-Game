@@ -9,6 +9,7 @@
 #include "../graphics/objects/shader.h"
 #include "../graphics/objects/vao.h"
 #include "../utils/events.h"
+#include "../math/color.hpp"
 
 
 
@@ -22,9 +23,9 @@ public:
 	void update(double elapsed_time);
 	void render();
 
-	void setBackgroundColor(SDL_Color color) { m_color_background = color; }
-	void setMajorColor(SDL_Color color) { m_color_major = color; }
-	void setMinorColor(SDL_Color color) { m_color_minor = color; }
+	void setBackgroundColor(Color color) { m_color_background = color; }
+	void setMajorColor(Color color) { m_color_major = color; }
+	void setMinorColor(Color color) { m_color_minor = color; }
 
 	Camera &getCamera() { return m_camera; }
 
@@ -34,9 +35,9 @@ private:
 	Shader m_shader;
 	VAO m_vao;
 
-	SDL_Color m_color_background;
-	SDL_Color m_color_major;
-	SDL_Color m_color_minor;
+	Color m_color_background;
+	Color m_color_major;
+	Color m_color_minor;
 
 	const Events &m_events;
 
