@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <SDL2/SDL.h>
 
 #include "../math/rect.h"
 
@@ -32,6 +33,8 @@ public:
 	void setWidth(float width);
 	void setHeight(float height);
 
+	void getCursorPosition(float &x, float &y) const;
+
 	float getZoom() const { return m_zoom; }
 	float getZoomMin() const { return m_zoom_min; }
 	float getZoomMax() const { return m_zoom_max; }
@@ -45,6 +48,9 @@ private:
 
 	const float m_screen_ratio;	// Screen ratio.
 
+	uint32_t m_width;	// Window width.
+	uint32_t m_height;	// Window height.
+	
 	float m_zoom;		// Zoom value.
 	float m_zoom_min;	// Min zoom value.
 	float m_zoom_max;	// Max zoom value.

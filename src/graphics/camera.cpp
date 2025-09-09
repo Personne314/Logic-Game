@@ -9,6 +9,8 @@
  */
 Camera::Camera(uint32_t width, uint32_t height) :
 	m_screen_ratio((float)width/height),
+	m_width(width),
+	m_height(height),
 	m_zoom(1.0f),
 	m_zoom_min(0.5f),
 	m_zoom_max(2.0f),
@@ -146,6 +148,31 @@ void Camera::setHeight(float height)
 	m_raw_viewport.h = height;
 	updateViewport();
 }
+
+
+
+/**
+ * @brief Return the cursor position in the camera space.
+ * @param x The variable where to store the x cursor coordinate.
+ * @param y The variable where to store the y cursor coordinate.
+ */
+void Camera::getCursorPosition(float &x, float &y) const
+{
+
+	// Get the cursor normalized coordinates.
+	int mouse_x, mouse_y;
+	SDL_GetMouseState(&mouse_x, &mouse_y);
+	float nc_x =  2.0f * mouse_x / m_width  - 1.0f;
+	float nc_y = -2.0f * mouse_y / m_height + 1.0f;
+
+	// Calculate the world coordinates.
+	glm::vec4 clip(nc_x, nc_y, 0.0f, 1.0f);
+	glm::vec4 world = m_inv_viewport * clip;
+	x = world.x;
+	y = world.y;
+
+}
+
 
 
 
