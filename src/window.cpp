@@ -122,9 +122,6 @@ bool Window::initGL()
 void Window::loop()
 {
 
-	// Game events handler.
-	Events events;
-
 	// Timer.
 	auto frame_time = std::chrono::high_resolution_clock::now();
 	auto second_time = frame_time;
@@ -133,7 +130,7 @@ void Window::loop()
 	uint32_t fps = 0;
 
 	// Main game loop.
-	while (!events.close()) {
+	while (!m_events->close()) {
 		auto now = std::chrono::high_resolution_clock::now();
 
 		// Render a frame.
@@ -145,7 +142,7 @@ void Window::loop()
 			++frame;
 
 			// Process all new events.
-			events.poll();
+			m_events->poll();
 
 			// Render a new frame.
 			m_game->render(frame_duration / 1000.0f);

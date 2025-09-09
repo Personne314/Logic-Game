@@ -29,7 +29,12 @@ Grid::~Grid()
 
 void Grid::update(double elapsed_time)
 {
-	m_camera.move(0.5f*elapsed_time, 0.5f*elapsed_time);
+
+	if (m_events.up()) m_camera.move(0, elapsed_time);
+	if (m_events.left()) m_camera.move(-elapsed_time, 0);
+	if (m_events.right()) m_camera.move(elapsed_time, 0);
+	if (m_events.down()) m_camera.move(0, -elapsed_time);
+
 }
 
 void Grid::render()
