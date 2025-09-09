@@ -14,7 +14,7 @@ class Game
 {
 public:
 
-	Game(uint32_t width, uint32_t height);
+	Game(const Events &events, uint32_t width, uint32_t height);
 	~Game();
 
 	void render(double elapsed_time);
@@ -28,7 +28,6 @@ private:
 
 	VAO vao;
 	Shader shader;
-	Shader shader_grid;
 	Camera cam;
 
 	Grid* grid;

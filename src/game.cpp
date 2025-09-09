@@ -2,11 +2,10 @@
 
 
 
-Game::Game(uint32_t width, uint32_t height) :
+Game::Game(const Events &events, uint32_t width, uint32_t height) :
 	m_init(false),
 	vao(),
 	shader("shader"),
-	shader_grid("grid"),
 	cam(width, height)
 {
 
@@ -31,7 +30,8 @@ Game::Game(uint32_t width, uint32_t height) :
 
 	cam.setHeight(8);
 
-	grid = new Grid(cam, shader_grid);
+	grid = new Grid(events, width, height);
+	grid->getCamera().setHeight(8);
 
 
 	m_init = true;
@@ -46,10 +46,14 @@ Game::~Game()
 
 void Game::render(double elapsed_time)
 {
+
+	grid->update(elapsed_time);
 	grid->render();
+
 	shader.use();
 	vao.bind();
 		glUniformMatrix4fv(shader.getUniformLocation("viewport"), 1, GL_FALSE, glm::value_ptr(cam.getViewport()));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 	vao.unbind();
+	
 }

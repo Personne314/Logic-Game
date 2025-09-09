@@ -38,7 +38,8 @@ Window::Window(uint32_t width, uint32_t height, const std::string& name) :
 	if (!initGL()) return;
 
 	// Create the game.
-	m_game = std::make_unique<Game>(width, height);
+	m_events = std::make_unique<Events>();
+	m_game = std::make_unique<Game>(*m_events, width, height);
 	m_init = m_game->isInit();
 
 }
@@ -138,8 +139,7 @@ void Window::loop()
 		// Render a frame.
 		if ((frame_duration = std::chrono::duration_cast<std::chrono::milliseconds>(
 				now-frame_time).count()
-			) >= 1000/FRAME_CAP && 
-			frame < FRAME_CAP
+			) >= 1000.0/FRAME_CAP 
 		) {
 			frame_time = now;
 			++frame;
@@ -148,7 +148,7 @@ void Window::loop()
 			events.poll();
 
 			// Render a new frame.
-			m_game->render(frame_duration);
+			m_game->render(frame_duration / 1000.0f);
 			SDL_GL_SwapWindow(m_window);
 	
 		// Delay when there is nothing to do.

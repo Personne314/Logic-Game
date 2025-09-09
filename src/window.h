@@ -39,6 +39,7 @@ private:
 	int m_width;	// Window width.
 	int m_height;	// Window height.
 
+	std::unique_ptr<Events> m_events;	// Pointer to the event manager.
 	std::unique_ptr<Game> m_game;	// Pointer to the game.
 
 };
