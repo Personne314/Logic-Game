@@ -40,19 +40,19 @@ void Grid::render()
 	m_shader.use();
 	m_vao.bind();
 		glUniform4f(
-			m_shader.getUniformLocation("background_color"), 
+			m_shader.uniform("background_color"), 
 			m_color_background.r, m_color_background.g, m_color_background.b, m_color_background.a
 		);
 		glUniform4f(
-			m_shader.getUniformLocation("major_color"),
+			m_shader.uniform("major_color"),
 			m_color_major.r, m_color_major.g, m_color_major.b, m_color_major.a
 		);
 		glUniform4f(
-			m_shader.getUniformLocation("minor_color"),
+			m_shader.uniform("minor_color"),
 			m_color_minor.r, m_color_minor.g, m_color_minor.b, m_color_minor.a
 		);
 		glUniformMatrix4fv(
-			m_shader.getUniformLocation("inv_viewport"), 
+			m_shader.uniform("inv_viewport"), 
 			1, GL_FALSE, glm::value_ptr(m_camera.getInvViewport())
 		);
 		glDrawArrays(GL_TRIANGLES, 0, 6);

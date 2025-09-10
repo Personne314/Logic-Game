@@ -8,6 +8,7 @@
 #include "../../graphics/objects/shader.h"
 #include "../../graphics/objects/vao.h"
 #include "../../graphics/camera.h"
+#include "../../utils/constants.hpp"
 
 
 
@@ -33,6 +34,6 @@ private:
 	VAO m_vao;	// VAO of the buffer.
 
 	uint32_t m_size;	// Number of wires in the bus.
-	uint32_t m_states;	// State of each wire.
+	uint32_t m_state;	// State of each wire.
 
 };

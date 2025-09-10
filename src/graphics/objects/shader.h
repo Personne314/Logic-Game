@@ -22,7 +22,7 @@ public:
 
 	void use() const { glUseProgram(m_progID); }
 
-	int getUniformLocation(std::string name) const { return glGetUniformLocation(m_progID, name.c_str()); }
+	int uniform(std::string name) const { return glGetUniformLocation(m_progID, name.c_str()); }
 
 	bool isInit() const { return m_init; }
 
