@@ -45,10 +45,12 @@ void Grid::render()
 		);
 		glUniform4f(
 			m_shader.getUniformLocation("major_color"),
-			m_color_major.r, m_color_major.g, m_color_major.b, m_color_major.a);
+			m_color_major.r, m_color_major.g, m_color_major.b, m_color_major.a
+		);
 		glUniform4f(
 			m_shader.getUniformLocation("minor_color"),
-			m_color_minor.r, m_color_minor.g, m_color_minor.b, m_color_minor.a);
+			m_color_minor.r, m_color_minor.g, m_color_minor.b, m_color_minor.a
+		);
 		glUniformMatrix4fv(
 			m_shader.getUniformLocation("inv_viewport"), 
 			1, GL_FALSE, glm::value_ptr(m_camera.getInvViewport())

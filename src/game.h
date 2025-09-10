@@ -2,10 +2,9 @@
 
 #include <stdint.h>
 
-#include "graphics/objects/vao.h"
 #include "graphics/objects/shader.h"
-#include "graphics/camera.h"
 #include "interface/grid.h"
+#include "interface/components/bus.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -28,11 +27,8 @@ private:
 
 	bool m_init;
 
-
-	VAO vao;
 	Shader shader;
-	Camera cam;
 
 	Grid* grid;
-
+	Bus *bus;
 };

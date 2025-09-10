@@ -12,6 +12,7 @@ int32_t sizeFromGLType(uint32_t type)
 	case GL_DOUBLE:	return sizeof(double);
 	case GL_INT:	return sizeof(uint32_t);
 	case GL_SHORT:	return sizeof(uint16_t);
+	case GL_BYTE:	return sizeof(uint8_t);
 	default:		
 		print_error("Unknown GLType {}", type);
 		return -1;
