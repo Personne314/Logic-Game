@@ -20,7 +20,7 @@ Bus::Bus(const Shader &shader, const Camera &camera) :
 		-0.5f,  0.5f, -1,  1
 	};
 
-	uint8_t type = Direction::RIGHT + Direction::UP + (Direction::RIGHT << 4);
+	uint8_t type = Direction::DOWN + Direction::RIGHT + Direction::UP + (Direction::RIGHT << 4);
 	uint8_t vertices_types[] = {
 		type, type, type, type, type, type
 	};
