@@ -10,7 +10,11 @@ Events::Events() :
 	m_up(false),
 	m_left(false),
 	m_right(false),
-	m_down(false)
+	m_down(false),
+	m_left_click(false),
+	m_right_click(false),
+	m_left_click_hold(false),
+	m_right_click_hold(false)
 {
 
 }
@@ -22,6 +26,12 @@ Events::Events() :
  */
 void Events::poll() {
 
+
+	// Reset temp events.
+	m_left_click = false;
+	m_right_click = false;
+
+	// Loop over each event.
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
@@ -48,6 +58,27 @@ void Events::poll() {
 			case SDLK_DOWN:		m_down = false;		break;
 			}
 			break;
+
+		// Detect a pressure on a mouse button
+		case SDL_MOUSEBUTTONDOWN:
+			switch (event.button.button) {
+			case SDL_BUTTON_LEFT:	
+				m_left_click = true;	
+				m_left_click_hold = true;	break;
+			case SDL_BUTTON_RIGHT:	
+				m_right_click = true;
+				m_right_click_hold = true;	break;
+			}
+			break;
+
+		// Detect a release of pressure on a mouse button
+		case SDL_MOUSEBUTTONUP:
+			switch (event.button.button) {
+			case SDL_BUTTON_LEFT:	m_left_click_hold = false;	break;
+			case SDL_BUTTON_RIGHT:	m_right_click_hold = false;	break;
+			}
+			break;
+
 		}
 		
 	} 

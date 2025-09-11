@@ -15,7 +15,7 @@ Game::Game(const Events &events, uint32_t width, uint32_t height) :
 
 	grid->getCamera().setHeight(8);
 
-	bus = new Bus(shader, grid->getCamera());
+	bus = new BusFactory(shader, grid->getCamera(), events);
 
 	m_init = true;
 }

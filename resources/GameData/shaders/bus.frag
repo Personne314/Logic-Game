@@ -9,8 +9,8 @@ flat in uint bus_type;	// Type of the current bus section.
 
 out vec4 out_color;	// Final color of the fragment.
 
-uniform uint size;
-uniform uint state;
+uniform uint size;	// Number of wire in the bus.
+uniform uint state;	// State of the bus. 
 uniform vec4 off_color;	// Color of off wire in the bus.
 uniform vec4 on_color;	// Color of on wire in the bus.
 
@@ -40,7 +40,6 @@ void main()
 	// Default color.
 	out_color = vec4(0,0,0,0);
 	
-
 	// Up.
 	if (up && abs_pos.x <= WIDTH && (down || relative_pos.y > WIDTH || (nb_dir == 1 && relative_pos.y >= -WIDTH))) {
 		float norm_pos = (relative_pos.x + WIDTH) / (2.0 * WIDTH);
@@ -96,10 +95,9 @@ void main()
 		}
 
 	// Case of multiple outputs.
-	} else if (nb_dir > 2) {
+	} else if (nb_dir > 2 || nb_dir == 0) {
 		if (abs_pos.x < 0.75*WIDTH && abs_pos.y < 0.75*WIDTH) out_color = vec4(0.10,0.15,0.10,1);
 		else if (abs_pos.x < WIDTH && abs_pos.y < WIDTH) out_color = vec4(0.15,0.3,0.2,1);
 	}
-
 
 }

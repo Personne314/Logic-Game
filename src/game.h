@@ -30,5 +30,5 @@ private:
 	Shader shader;
 
 	Grid* grid;
-	Bus *bus;
+	BusFactory *bus;
 };
