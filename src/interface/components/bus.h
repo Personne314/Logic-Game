@@ -76,6 +76,7 @@ private:
 
 	void add_node();
 	void remove_node();
+	void update_preview();
 
 	std::vector<std::pair<int32_t, int32_t>> m_nodes;	// Nodes of the bus.
 	std::unique_ptr<Bus> m_preview;	// Preview bus.

@@ -137,16 +137,24 @@ void BusFactory::update()
 	// Get the int coordinate of the cursor.
 	float x,y;
 	m_camera.getCursorPosition(x,y);
-	m_x = static_cast<int32_t>(std::round(x));
-	m_y = static_cast<int32_t>(std::round(y));
+	uint32_t i_x = static_cast<int32_t>(std::round(x));
+	uint32_t i_y = static_cast<int32_t>(std::round(y));
+
+	if (m_x != i_x || m_y != i_y) update_preview();
+	m_x = i_x;
+	m_y = i_y;
 
 	// If there are already nodes, force alignment with it.
 	if (m_nodes.size()) {
-		float dx2 = (x-m_x)*(x-m_x);
-		float dy2 = (y-m_y)*(y-m_y);
+		uint32_t n_x = m_nodes.back().first;
+		uint32_t n_y = m_nodes.back().second;
+		float dx2 = (n_x-m_x)*(n_x-m_x);
+		float dy2 = (n_y-m_y)*(n_y-m_y);
 		if (dx2 > dy2) m_y = m_nodes.back().second;
 		else m_x = m_nodes.back().first;
 	}
+
+
 
 	if (m_events.left_click()) add_node();
 	if (m_events.right_click()) remove_node();
@@ -154,18 +162,6 @@ void BusFactory::update()
 }
 
 
-
-void BusFactory::add_node()
-{
-
-
-
-}
-
-void BusFactory::remove_node()
-{
-
-}
 
 void BusFactory::clear()
 {
@@ -183,16 +179,38 @@ std::unique_ptr<Bus> BusFactory::make() const
 
 void BusFactory::render() const
 {
+
+
+
+	// Render the preview 'cursor'.
 	m_shader.use();
 	m_preview_vao.bind();
-		glUniform1ui(m_shader.uniform("size"), 4);
-		glUniform1ui(m_shader.uniform("state"), 13);
-		glUniform4f(m_shader.uniform("off_color"), 0,0.15,0,1);
-		glUniform4f(m_shader.uniform("on_color"), 0,0.8,0,1);
+		glUniform2f(m_shader.uniform("offset"), m_x, m_y);
+		glUniform4f(m_shader.uniform("inner_color"), 0.10,0.15,0.10,1);
+		glUniform4f(m_shader.uniform("outer_color"), 0.15,0.3,0.2,1);
 		glUniformMatrix4fv(
 			m_shader.uniform("viewport"), 1, GL_FALSE, 
 			glm::value_ptr(m_camera.getViewport())
 		);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 	m_preview_vao.unbind();
+
+}
+
+
+
+void BusFactory::add_node()
+{
+	if (m_nodes.size() && m_nodes.back().first == m_x && m_nodes.back().second == m_y) return;
+	m_nodes.push_back(std::make_pair(m_x, m_y));
+}
+
+void BusFactory::remove_node()
+{
+	if (m_nodes.size()) m_nodes.pop_back();
+}
+
+void BusFactory::update_preview()
+{
+
 }

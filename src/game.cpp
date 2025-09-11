@@ -34,6 +34,7 @@ void Game::render(double elapsed_time)
 	grid->update(elapsed_time);
 	grid->render();
 
+	bus->update();
 	bus->render();
 
 	
