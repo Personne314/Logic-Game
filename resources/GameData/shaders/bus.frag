@@ -37,17 +37,24 @@ void main()
 	// Default color.
 	out_color = vec4(0,0,0,0);
 	
-
-
+	// Render the component.
 	if (nb_dir == 2) {
 
+		// Render a horizontal bus line.
 		if (left && right) {
+			float norm_pos = (relative_pos.y + 1.0) / 2.0;
+			uint i = uint(floor(norm_pos * size));
+			if (inverse) i = size-i-1;
+			if ((state & (1 << i)) != 0) out_color = on_color;
+			else out_color = off_color;
 
-
-
+		// Render a vertical bus line.
 		} else if (up && down) {
-
-
+			float norm_pos = (relative_pos.x + 1.0) / 2.0;
+			uint i = uint(floor(norm_pos * size));
+			if (inverse) i = size-i-1;
+			if ((state & (1 << i)) != 0) out_color = on_color;
+			else out_color = off_color;
 
 		// Render the center in case of a curve.
 		} else {
@@ -70,6 +77,7 @@ void main()
 			
 		}
 
+	// Case for a node component.
 	} else {
 		if (abs_pos.x < 0.75 && abs_pos.y < 0.75) out_color = inner_color;
 		else out_color = outer_color;
