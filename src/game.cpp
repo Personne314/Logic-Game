@@ -16,6 +16,7 @@ Game::Game(const Events &events, uint32_t width, uint32_t height) :
 	grid->getCamera().setHeight(8);
 
 	bus = new BusFactory(shader, grid->getCamera(), events);
+	bus->setBusWidth(0.5);
 
 	m_init = true;
 }
@@ -31,11 +32,20 @@ Game::~Game()
 void Game::render(double elapsed_time)
 {
 
+	static bool t = false;
+
 	grid->update(elapsed_time);
 	grid->render();
 
 	bus->update();
 	bus->render();
 
-	
+	if (!t && bus->done()) {
+		t = true;
+		test_bus = bus->make();
+	}
+
+	if (test_bus) test_bus->render();
+
+
 }

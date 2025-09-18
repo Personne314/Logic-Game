@@ -5,9 +5,6 @@
 #include "graphics/objects/shader.h"
 #include "interface/grid.h"
 #include "interface/components/bus.h"
-
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
 #include "math/color.hpp"
 
 
@@ -31,4 +28,7 @@ private:
 
 	Grid* grid;
 	BusFactory *bus;
+
+	std::unique_ptr<Bus> test_bus;
+	
 };

@@ -151,7 +151,6 @@ Bus::Bus(
 	std::vector<float> vertices;
 	std::vector<uint8_t> vertices_types;
 	add_node_vertices(vertices, vertices_types, width, 0, nodes.front().first, nodes.front().second);
-	if (nodes.size() > 1) add_node_vertices(vertices, vertices_types, width, 0, nodes.back().first, nodes.back().second);
 
 	// Add other nodes vertices.
 	const size_t nodes_len = nodes.size();
@@ -161,6 +160,9 @@ Bus::Bus(
 		const std::pair<int32_t,int32_t> prev = nodes[i-1];
 		const std::pair<int32_t,int32_t> curr = nodes[i];
 		const std::pair<int32_t,int32_t> next = nodes[i+1];
+
+		// Add the corresponding bus.
+		add_bus_vertices(vertices, vertices_types, width, prev, curr);
 
 		// Orientation of the previous node.
 		const bool prev_up    = curr.second < prev.second;
@@ -197,9 +199,10 @@ Bus::Bus(
 
 	}
 
-	// Add the bus vertices.
-	for (size_t i = 0; i < nodes_len-1; ++i) {
-		add_bus_vertices(vertices, vertices_types, width, nodes[i], nodes[i+1]);
+	// Add the last bus and node vertices.
+	if (nodes.size() > 1) {
+		add_bus_vertices(vertices, vertices_types, width, *(nodes.end()-2), nodes.back());
+		add_node_vertices(vertices, vertices_types, width, 0, nodes.back().first, nodes.back().second);
 	}
 
 	// Build the bus vao.
@@ -292,19 +295,6 @@ BusFactory::BusFactory(const Shader &shader, const Camera &camera, const Events 
 	m_done(false)
 {
 
-	// Add the vertices of the cursor node.
-	std::vector<float> vertices;
-	std::vector<uint8_t> vertices_types;
-	add_node_vertices(vertices, vertices_types, m_bus_width, 0,0,0);
-
-	// Build the vao of the cursor node.
-	void* data[]       = { vertices.data(), vertices_types.data() };
-	uint32_t sizes[]   = { 4, 1 };
-	uint32_t types[]   = { GL_FLOAT, GL_UNSIGNED_BYTE };
-	uint32_t len       = 6;
-	uint32_t n         = 2;
-	m_preview_vao.pushData(data, sizes, types, len, n);
-
 }
 
 
@@ -350,6 +340,32 @@ void BusFactory::clear()
 	m_preview.reset();
 	m_done = false;
 }
+
+
+
+/**
+ * @brief Set the width of the bus and update the cursor.
+ * @param width The width of the bus.
+ */
+void BusFactory::setBusWidth(float width)
+{
+	m_bus_width = width;
+
+	// Add the vertices of the cursor node.
+	std::vector<float> vertices;
+	std::vector<uint8_t> vertices_types;
+	add_node_vertices(vertices, vertices_types, m_bus_width, 0,0,0);
+
+	// Build the vao of the cursor node.
+	void* data[]       = { vertices.data(), vertices_types.data() };
+	uint32_t sizes[]   = { 4, 1 };
+	uint32_t types[]   = { GL_FLOAT, GL_UNSIGNED_BYTE };
+	uint32_t len       = 6;
+	uint32_t n         = 2;
+	m_preview_vao.pushData(data, sizes, types, len, n);
+}
+
+
 
 
 

@@ -76,7 +76,7 @@ public:
 	void clear();
 
 	void setBusSize(uint32_t size) { m_bus_size = size; }
-	void setBusWidth(float width) { m_bus_width = width; }
+	void setBusWidth(float width);
 
 	bool done() const { return m_done; }
 	std::unique_ptr<Bus> make() const;
