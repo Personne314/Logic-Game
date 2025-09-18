@@ -16,9 +16,14 @@
 #include "../../utils/events.h"
 #include "../../utils/constants.hpp"
 #include "../../utils/logger.hpp"
+#include "../../math/rect.h"
 
 
 
+/**
+ * @class Bus
+ * @brief Used to represent and render a bus in a grid.
+ */
 class BusFactory;
 class Bus
 {
@@ -31,7 +36,7 @@ public:
 		uint32_t size,
 		float width
 	);
-	~Bus();
+	~Bus() = default;
 
 	void render();
 
@@ -56,6 +61,10 @@ private:
 
 
 
+/**
+ * @class BusFactory
+ * @brief Used to build a bus in a grid.
+ */
 class BusFactory
 {
 public:
@@ -69,6 +78,7 @@ public:
 	void setBusSize(uint32_t size) { m_bus_size = size; }
 	void setBusWidth(float width) { m_bus_width = width; }
 
+	bool done() const { return m_done; }
 	std::unique_ptr<Bus> make() const;
 
 	void render() const;
@@ -91,6 +101,8 @@ private:
 
 	float m_bus_width;		// Widht of the generated bus.
 	uint32_t m_bus_size;	// Size of the generated bus.
+
+	bool m_done;	// true if the current wire is done being build.
 
 };
 
